@@ -53,7 +53,7 @@ async function getCourses() {
         // .or([{author: 'Mosh'}, {isPublished: true}])
         // .and([{author: 'Mosh'}, {isPublished: true}])
         .skip((pageNumber - 1) * pageSize)
-        .limit(10)
+        .limit(pageSize)
         .sort({name: 1})
         // .select({name: 1, tags: 1})
         .countDocuments();
