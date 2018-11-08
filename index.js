@@ -27,6 +27,8 @@ async function createCourse() {
 }
 
 async function getCourses() {
+    const pageNumber = 2;
+    const pageSize = 10;
     // eq (equal)
     // ne (not equal)
     // gt (greater than or equal to)
@@ -50,6 +52,7 @@ async function getCourses() {
 
         // .or([{author: 'Mosh'}, {isPublished: true}])
         // .and([{author: 'Mosh'}, {isPublished: true}])
+        .skip((pageNumber - 1) * pageSize)
         .limit(10)
         .sort({name: 1})
         // .select({name: 1, tags: 1})
