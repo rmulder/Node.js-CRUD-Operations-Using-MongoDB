@@ -38,9 +38,6 @@ async function getCourses() {
     // in
     // nin (not in)
 
-    // or
-    // and
-
     const courses = await Course
         .find({ author: 'Mosh', isPublished: true})
         // .find({price: { $gte: 10, $lte: 20}})
@@ -49,15 +46,25 @@ async function getCourses() {
         // .find([{author: /^Mosh/}])
         // .find([{author: /Hamedani$/i}])
         // .find([{author: /.*Mosh.*/i}])
-
         // .or([{author: 'Mosh'}, {isPublished: true}])
         // .and([{author: 'Mosh'}, {isPublished: true}])
         .skip((pageNumber - 1) * pageSize)
         .limit(pageSize)
         .sort({name: 1})
-        // .select({name: 1, tags: 1})
-        .countDocuments();
+        .select({name: 1, tags: 1});
+        // .countDocuments();
     console.log(courses);
 }
 
-getCourses();
+async function updateCourse(id) {
+   const course = await Course.findById(id);
+   if (!course) return;
+
+   course.isPublished = true;
+   course.author = 'Another Author';
+
+   const result = await course.save();
+   console.log(result);
+}
+
+updateCourse('5be472e08b98a405e49119fc');
